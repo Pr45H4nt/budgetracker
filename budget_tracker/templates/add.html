@@ -4,5 +4,12 @@
     {{form.as_p}}
     {% csrf_token %}
     <input type="submit" value="Submit">
-
+    
 </form>
+
+
+
+{% for message in messages %}
+    {{message}}
+{% endfor %}
+    
