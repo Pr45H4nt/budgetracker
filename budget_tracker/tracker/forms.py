@@ -10,6 +10,14 @@ class IncomeForm(forms.ModelForm):
         model = Income
         fields = '__all__'
 
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(IncomeForm, self).__init__(*args, **kwargs)
+        if self.request:
+            self.fields['category'].queryset = IncomeCategory.objects.filter(user= self.request.user)
+    
+    
+
 class ExpenseForm(forms.ModelForm):
     """Form definition for Expense."""
 
@@ -19,6 +27,12 @@ class ExpenseForm(forms.ModelForm):
         model = Expense
         fields = '__all__'
 
+    def __init__(self, *args , **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(ExpenseForm, self).__init__(*args , **kwargs)
+        if self.request:
+            self.fields['category'].queryset = ExpenseCategory.objects.filter(user = self.request.user)
+
 class ExpenseCategoryForm(forms.ModelForm):
     """Form definition for ExpenseCategory."""
 
@@ -26,7 +40,8 @@ class ExpenseCategoryForm(forms.ModelForm):
         """Meta definition for ExpenseCategoryform."""
 
         model = ExpenseCategory
-        fields = "__all__"
+        fields = ['name']
+
 
 class IncomeCategoryForm(forms.ModelForm):
     """Form definition for IncomeCategory."""
@@ -35,5 +50,6 @@ class IncomeCategoryForm(forms.ModelForm):
         """Meta definition for IncomeCategoryform."""
 
         model = IncomeCategory
-        fields = "__all__"
+        fields =  ['name']
+
 

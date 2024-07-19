@@ -1,51 +1,64 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>All Events</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
-    <h1>All Events</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for event in data %}
-                <tr>
-                    <td>{{ event.date }}</td>
-                    <td>{{ event.category }}</td>
-                    <td>{{ event.description }}</td>
-                    <td>{{ event.amount }}</td>
-                </tr>
+{% extends 'base.html' %}
+
+{% block title %}Records{% endblock %}
+
+{% block content %}
+<h2>Records</h2>
+<form method="get" class="form-inline mb-3">
+    <div class="form-group mr-2">
+        <label for="category" class="mr-2">Category:</label>
+        <select id="category" name="category" class="form-control">
+            <option value="">All</option>
+            {% for cat in category %}
+                <option value="{{ cat.name }}" {% if cat.name in selectedcategory %}selected{% endif %}>{{ cat.name }}</option>
             {% endfor %}
-        </tbody>
-    </table> <br>
-    Total : 2948298
-    <br>
-    <h2>Categories</h2>
-    
-    {% for name in category %}
-    {{name}} <br>
-        
-    {% endfor %}
-        
-</body>
-</html>
+        </select>
+    </div>
+    <div class="form-group mr-2">
+        <label for="date" class="mr-2">Date:</label>
+        <input type="date" id="date" name="date" class="form-control">
+    </div>
+    <div class="form-group mr-2">
+        <label for="start_date" class="mr-2">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" class="form-control">
+    </div>
+    <div class="form-group mr-2">
+        <label for="end_date" class="mr-2">End Date:</label>
+        <input type="date" id="end_date" name="end_date" class="form-control">
+    </div>
+    <div class="form-group mr-2">
+        <label for="min_amount" class="mr-2">Min Amount:</label>
+        <input type="number" id="min_amount" name="min_amount" class="form-control">
+    </div>
+    <div class="form-group mr-2">
+        <label for="max_amount" class="mr-2">Max Amount:</label>
+        <input type="number" id="max_amount" name="max_amount" class="form-control">
+    </div>
+    <div class="form-group mr-2">
+        <label for="keyword" class="mr-2">Keyword:</label>
+        <input type="text" id="keyword" name="keyword" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in data %}
+        <tr>
+            <td>{{ record.date }}</td>
+            <td>{{ record.category.name }}</td>
+            <td>{{ record.description }}</td>
+            <td>{{ record.amount }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

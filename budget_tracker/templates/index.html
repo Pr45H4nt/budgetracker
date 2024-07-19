@@ -1,4 +1,21 @@
-<h1>Test</h1>
+{% extends 'base.html' %}
 
-Total Income : {{total_income}} <br>
-Total Expense : {{total_expense}}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Welcome 
+    {% if request.user.is_authenticated %}
+        {{request.user}}, 
+    {% endif %}
+         to Personal Finance Tracker</h1>
+    <p class="lead">This is an application to manage your income and expenses.</p>
+    <hr class="my-4">
+    <p>Use the navigation bar to register, login, or manage your records.</p>
+</div>
+
+<div class="box">
+    {{total_income}} <br>
+    {{total_expense}}
+</div>
+{% endblock %}

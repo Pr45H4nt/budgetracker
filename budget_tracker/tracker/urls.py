@@ -11,4 +11,11 @@ urlpatterns = [
     path("add/expensecategory", views.addview, {'formtype': forms.ExpenseCategoryForm}, name = "addexpensecategory"),
     path('show/income', views.showdb , {'database' : models.Income , 'datacategory': models.IncomeCategory}, name= 'showincome' ),
     path('show/expense', views.showdb , {'database' : models.Expense , 'datacategory': models.ExpenseCategory}, name= 'showexpense' ),
+
+    path('show/category', views.showcat , name= 'showcategory'),
+    path("update/icategory/<int:id>", views.updateview, {'database': models.IncomeCategory, 'formtype':forms.IncomeCategoryForm}, name="updateicategory"  ),
+    path("update/irecord/<int:id>", views.updateview, {'database': models.Income, 'formtype':forms.IncomeForm}, name="irecordedit"  ),
+    path("update/erecord/<int:id>", views.updateview, {'database': models.Expense, 'formtype':forms.ExpenseForm}, name="erecordedit"  ),
+    path("update/ecategory/<int:id>", views.updateview, {'database': models.ExpenseCategory, 'formtype':forms.ExpenseCategoryForm}, name="updateecategory"  ),
+
 ]
